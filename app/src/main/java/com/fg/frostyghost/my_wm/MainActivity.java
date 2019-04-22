@@ -54,10 +54,11 @@ public class MainActivity extends AppCompatActivity  {
     ConstraintLayout constraintLayout;
 
     private int edT = 1;
-    private ImageButton writeText, confirmET, addText, frontB, frontI, frontSize_btn, invisible_text_btn, detectWM_btn, save_text_btn;
+    private ImageButton writeText, confirmET, addText, frontB, frontI, frontSize_btn, invisible_text_btn, detectWM_btn, save_text_btn,
+                            setTileMod, setTilePos;
     private EditText editText;
     private LinearLayout containerScrollText, container_n0, container_text;
-
+    private SeekBar setFrontSize;
   private FrameLayout mInsideBottomSheet;
     private ImageView mResultImg;
 //    private BaseMedia mMedia;
@@ -68,41 +69,20 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        constraintLayout = findViewById(R.id.ConstraintLayout);
-        txt_1 = findViewById(R.id.formatText);
-        txt_2 = findViewById(R.id.textView4);
-
-        SeekBar setFrontSize = findViewById(R.id.seekBar);
-
-        writeText = findViewById(R.id.imageButton8);
-        addText = findViewById(R.id.imageButton9);
-        invisible_text_btn = findViewById(R.id.invisible_text_btn);
-        detectWM_btn = findViewById(R.id.detectWM);
-        save_text_btn = findViewById(R.id.save_text_btn);
-
-        frontB = findViewById(R.id.front_B_btn);
-        frontI = findViewById(R.id.front_I_btn);
-        frontSize_btn = findViewById(R.id.front_Size_btn);
-        confirmET = findViewById(R.id.confirmET);
-        editText = findViewById(R.id.editText2);
-        containerScrollText= findViewById(R.id.container_scroll_text);
-        container_text = findViewById(R.id.container_text);
-
-        //delete
-        container_n0=findViewById(R.id.container0);
-        container_n0.removeView(editText);
-        container_n0.removeView(confirmET);
-        container_text.removeView(txt_1);
-        container_n0.removeView(setFrontSize);
-
-        //txt_1 = new TextView(this);
-        button = findViewById(R.id.button7);
-
-        mResultImg = findViewById(R.id.imageView3);
+        initViews();
 
 
-
-
+        setTileMod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //міняти картинку в планах багато кубіків, на 1 куб
+                if (!tileMod){
+                    tileMod =true;
+                }else {
+                    tileMod = false;
+                }
+            }
+        });
         addText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -429,6 +409,44 @@ public class MainActivity extends AppCompatActivity  {
         }catch (Exception e){
             Toast.makeText(this, "Something Went Wrong, Please Try Again!", Toast.LENGTH_SHORT).show();
         }
+
+    }
+
+    private void initViews() {
+
+        constraintLayout = findViewById(R.id.ConstraintLayout);
+        txt_1 = findViewById(R.id.formatText);
+        txt_2 = findViewById(R.id.textView4);
+
+        setFrontSize = findViewById(R.id.seekBar);
+
+        writeText = findViewById(R.id.imageButton8);
+        addText = findViewById(R.id.imageButton9);
+        invisible_text_btn = findViewById(R.id.invisible_text_btn);
+        detectWM_btn = findViewById(R.id.detectWM);
+        save_text_btn = findViewById(R.id.save_text_btn);
+        setTileMod = findViewById(R.id.tile_mod);
+        setTilePos = findViewById(R.id.tile_pos);
+
+        frontB = findViewById(R.id.front_B_btn);
+        frontI = findViewById(R.id.front_I_btn);
+        frontSize_btn = findViewById(R.id.front_Size_btn);
+        confirmET = findViewById(R.id.confirmET);
+        editText = findViewById(R.id.editText2);
+        containerScrollText= findViewById(R.id.container_scroll_text);
+        container_text = findViewById(R.id.container_text);
+
+        //delete
+        container_n0=findViewById(R.id.container0);
+        container_n0.removeView(editText);
+        container_n0.removeView(confirmET);
+        container_text.removeView(txt_1);
+        container_n0.removeView(setFrontSize);
+
+        //txt_1 = new TextView(this);
+        button = findViewById(R.id.button7);
+
+        mResultImg = findViewById(R.id.imageView3);
 
     }
 }
