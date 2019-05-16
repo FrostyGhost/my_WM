@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -37,10 +38,18 @@ import com.watermark.androidwm.bean.WatermarkText;
 import com.watermark.androidwm.listener.BuildFinishListener;
 import com.watermark.androidwm.listener.DetectFinishListener;
 import com.watermark.androidwm.task.DetectionReturnValue;
+import com.zomato.photofilters.SampleFilters;
+import com.zomato.photofilters.imageprocessors.Filter;
+import com.zomato.photofilters.imageprocessors.subfilters.BrightnessSubFilter;
+import com.zomato.photofilters.imageprocessors.subfilters.ContrastSubFilter;
+
+import com.fg.frostyghost.my_wm.FiltersSample;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
+import ja.burhanrashid52.photoeditor.PhotoEditorView;
 import timber.log.Timber;
 
 
@@ -53,17 +62,34 @@ public class MainActivity extends AppCompatActivity  {
     double frontSize;
     ConstraintLayout constraintLayout;
 
+    //редктор
+    private PhotoEditorView photoEditorView;
+
     private int edT = 1;
     private ImageButton writeText, confirmET, addText, frontB, frontI, frontSize_btn, invisible_text_btn, detectWM_btn, save_text_btn,
-                            setTileMod, setTilePos;
+                            setTileMod, setTilePos, textEditMenu, imageEditMenu, imageFilterEditMenu, backMenu;
     private EditText editText;
-    private LinearLayout containerScrollText, container_n0, container_text;
+    private LinearLayout containerScrollText, container_n0, container_text, container_filter_menu;
     private SeekBar setFrontSize;
   private FrameLayout mInsideBottomSheet;
+
     private ImageView mResultImg;
+    private ImageView filter_1,filter_2,filter_3;
 //    private BaseMedia mMedia;
 
-    private int REQUEST_GET_SINGLE_FILE = 1;
+    //крч при завантажені фотки, зберігаємо бітмат з імв
+    Bitmap bmap, backupBmap;
+    public Filter filter;
+
+    private int REQUEST_GET_SINGLE_FILE = 1, saveBitmap= 0;
+
+    @Override
+    protected void onResume() {
+        //mResultImg.buildDrawingCache();
+        //bmap = mResultImg.getDrawingCache();
+        super.onResume();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +97,8 @@ public class MainActivity extends AppCompatActivity  {
 
         initViews();
 
+        //загружаємо бібліотеку фільтрів
+        System.loadLibrary("NativeImageProcessor");
 
         setTileMod.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,8 +229,91 @@ public class MainActivity extends AppCompatActivity  {
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"),REQUEST_GET_SINGLE_FILE);
+
+                //mResultImg.buildDrawingCache();
+               // bmap = mResultImg.getDrawingCache();
+                saveBitmap = 0;
             }
         });
+        //вибір меню для редагування
+        View.OnClickListener setMenu = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (v.getId()){
+                    case R.id.text_edit_menu:
+                        ConstraintSet set = new ConstraintSet();
+                        set.clone(constraintLayout);
+                        //set.clear(R.id.button7, ConstraintSet.LEFT);
+                        set.clear(R.id.gallery, ConstraintSet.TOP);
+                        set.connect(R.id.gallery, ConstraintSet.TOP, R.id.button7, ConstraintSet.BOTTOM);
+                        //set.connect(R.id.button7, ConstraintSet.LEFT, R.id.guideline, ConstraintSet.LEFT);
+                        TransitionManager.beginDelayedTransition(constraintLayout);
+                        set.applyTo(constraintLayout);
+                        break;
+                    case R.id.image_edit_menu:
+                        break;
+                    case R.id.image_filter_edit_menu:
+
+                        ConstraintSet set3 = new ConstraintSet();
+                        set3.clone(constraintLayout);
+                        //set.clear(R.id.button7, ConstraintSet.LEFT);
+                        set3.clear(R.id.filters_menu, ConstraintSet.TOP);
+                        set3.connect(R.id.filters_menu, ConstraintSet.TOP, R.id.button7, ConstraintSet.BOTTOM);
+                        //set.connect(R.id.button7, ConstraintSet.LEFT, R.id.guideline, ConstraintSet.LEFT);
+                        TransitionManager.beginDelayedTransition(constraintLayout);
+                        set3.applyTo(constraintLayout);
+                        break;
+                }
+            }
+        };
+        textEditMenu.setOnClickListener(setMenu);
+        imageEditMenu.setOnClickListener(setMenu);
+        imageFilterEditMenu.setOnClickListener(setMenu);
+
+        //filters
+        View.OnClickListener setFilrer = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (saveBitmap == 0){
+                    saveBitmap = 1;
+                    mResultImg.buildDrawingCache();
+                    bmap = mResultImg.getDrawingCache();
+
+                    Toast.makeText(MainActivity.this, "SKAAAAAAAAAAAAAA", Toast.LENGTH_LONG ).show();
+                }
+                switch (v.getId()){
+                    case R.id.filter_1:
+                       // mResultImg.buildDrawingCache();
+                        //Bitmap bmap = mResultImg.getDrawingCache();
+                        //Filter myFilter = new Filter();
+                        filter.addSubFilter(new BrightnessSubFilter(30));
+                        filter.addSubFilter(new ContrastSubFilter(1.1f));
+                        Bitmap outputImage = filter.processFilter(bmap);
+                        mResultImg.setImageBitmap(outputImage);
+                        break;
+                    case R.id.filter_2:
+                        filter = FiltersSample.getBlueMessFilter();
+                        //filter.addSubFilter(new BrightnessSubFilter(30));
+                        filter.addSubFilter(new ContrastSubFilter(1.1f));
+                        Bitmap outputImage2 = filter.processFilter(bmap);
+                        mResultImg.setImageBitmap(outputImage2);
+                        break;
+                    case R.id.filter_3:
+//                        filter = FiltersSample.getStarLitFilter();
+//                        //filter.addSubFilter(new BrightnessSubFilter(30));
+//                        //filter.addSubFilter(new ContrastSubFilter(1.1f));
+//                        Bitmap outputImage3 = filter.processFilter(bmap);
+//                        mResultImg.setImageBitmap(outputImage3);
+
+                        mResultImg.setImageBitmap(bmap);
+                        break;
+                }
+            }
+        };
+            filter_1.setOnClickListener(setFilrer);
+            filter_2.setOnClickListener(setFilrer);
+            filter_3.setOnClickListener(setFilrer);
 
         View.OnClickListener setFront = new View.OnClickListener() {
             @Override
@@ -228,6 +339,7 @@ public class MainActivity extends AppCompatActivity  {
         frontI.setOnClickListener(setFront);
         frontSize_btn.setOnClickListener(setFront);
 
+        //FRONT
         setFrontSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -254,10 +366,19 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 saveAsBitmap(mResultImg, "image.png");
+
+
             }
         });
 
-
+        //v menu
+        backMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, TestActivity.class);
+                startActivity(intent);
+            }
+        });
 
         /// Dozvil
 
@@ -282,9 +403,15 @@ public class MainActivity extends AppCompatActivity  {
                     if (path != null) {
                         File f = new File(path);
                         selectedImageUri = Uri.fromFile(f);
+
+                        //NTCN TESTTTTTTTTTt
+
+                        copyExifRotation(f, f);
                     }
                     // Set the image in ImageView
                     mResultImg.setImageURI(selectedImageUri);
+
+
                 }
             }
         } catch (Exception e) {
@@ -427,6 +554,10 @@ public class MainActivity extends AppCompatActivity  {
         save_text_btn = findViewById(R.id.save_text_btn);
         setTileMod = findViewById(R.id.tile_mod);
         setTilePos = findViewById(R.id.tile_pos);
+        textEditMenu = findViewById(R.id.text_edit_menu);
+        imageEditMenu = findViewById(R.id.image_edit_menu);
+        imageFilterEditMenu = findViewById(R.id.image_filter_edit_menu);
+        backMenu = findViewById(R.id.backMenu);
 
         frontB = findViewById(R.id.front_B_btn);
         frontI = findViewById(R.id.front_I_btn);
@@ -435,6 +566,9 @@ public class MainActivity extends AppCompatActivity  {
         editText = findViewById(R.id.editText2);
         containerScrollText= findViewById(R.id.container_scroll_text);
         container_text = findViewById(R.id.container_text);
+        container_filter_menu = findViewById(R.id.filters_menu);
+
+        container_filter_menu=findViewById(R.id.filter_menu);
 
         //delete
         container_n0=findViewById(R.id.container0);
@@ -448,5 +582,41 @@ public class MainActivity extends AppCompatActivity  {
 
         mResultImg = findViewById(R.id.imageView3);
 
+        filter_1 = findViewById(R.id.filter_1);
+        filter_2 = findViewById(R.id.filter_2);
+        filter_3 = findViewById(R.id.filter_3);
+
+        filter = new Filter();
     }
+
+    @Override
+    public void onBackPressed() {
+        ConstraintSet set = new ConstraintSet();
+        set.clone(constraintLayout);
+        //set.clear(R.id.button7, ConstraintSet.LEFT);
+        set.clear(R.id.gallery, ConstraintSet.TOP);
+        set.clear(R.id.filters_menu, ConstraintSet.TOP);
+        //set.connect(R.id.gallery, ConstraintSet.TOP, R.id.button7, ConstraintSet.BOTTOM);
+        //set.connect(R.id.button7, ConstraintSet.LEFT, R.id.guideline, ConstraintSet.LEFT);
+        TransitionManager.beginDelayedTransition(constraintLayout);
+        set.applyTo(constraintLayout);
+        //super.onBackPressed();
+    }
+
+
+    public static boolean copyExifRotation(File sourceFile, File destFile) {
+        if (sourceFile == null || destFile == null) return false;
+        try {
+            ExifInterface exifSource = new ExifInterface(sourceFile.getAbsolutePath());
+            ExifInterface exifDest = new ExifInterface(destFile.getAbsolutePath());
+            exifDest.setAttribute(ExifInterface.TAG_ORIENTATION, exifSource.getAttribute(ExifInterface.TAG_ORIENTATION));
+            exifDest.saveAttributes();
+            return true;
+        } catch (IOException e) {
+
+            return false;
+        }
+    }
+
+
 }

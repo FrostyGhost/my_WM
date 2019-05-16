@@ -12,7 +12,7 @@
     <Button
         android:id="@+id/button7"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="38dp"
         android:background="#554C4C"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -24,14 +24,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.5" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.44" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
@@ -58,6 +58,14 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/test" />
 
+        <ja.burhanrashid52.photoeditor.PhotoEditorView
+            android:id="@+id/photoEditorView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/test"
+            tools:layout_editor_absoluteY="402dp" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -75,9 +83,9 @@
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="53dp"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_btn_speak_now" />
+            app:srcCompat="@drawable/ic_image" />
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -94,14 +102,13 @@
             app:srcCompat="@android:drawable/arrow_down_float" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:srcCompat="@android:drawable/ic_menu_share" />
 
         <ImageButton
-            android:id="@+id/imageButton5"
+            android:id="@+id/backMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -109,33 +116,106 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="#CAC8C8"
-        android:id="@+id/gallery"
+        android:id="@+id/filter_menu"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button7">
 
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/text_edit_menu"
+                    android:layout_width="72dp"
+                    android:layout_height="68dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_edit" />
+
+                <ImageButton
+                    android:id="@+id/image_edit_menu"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+                <ImageButton
+                    android:id="@+id/image_filter_edit_menu"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_image_filter_none" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+                <Button
+                    android:id="@+id/button6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/gallery"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#CAC8C8"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <!--<ja.burhanrashid52.photoeditor.PhotoEditorView-->
-            <!--android:id="@+id/photoEditorView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:photo_src="@drawable/yosemite" />-->
+        <!--android:id="@+id/photoEditorView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--app:photo_src="@drawable/yosemite" />-->
 
         <ScrollView
             android:id="@+id/scroll_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:id="@+id/container_scroll_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/container_text"
@@ -173,20 +253,20 @@
                     android:orientation="horizontal">
 
                     <SeekBar
-                        android:min="5"
-                        android:max="100"
                         android:id="@+id/seekBar"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_weight="0.8" />
+                        android:layout_weight="0.8"
+                        android:max="100"
+                        android:min="5" />
 
                     <EditText
-                        android:gravity="left"
-                        android:layout_weight="0.8"
                         android:id="@+id/editText2"
                         android:layout_width="344dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
                         android:ems="10"
+                        android:gravity="left"
                         android:inputType="textPersonName"
                         android:text="Name" />
 
@@ -201,39 +281,39 @@
                 </LinearLayout>
 
                 <LinearLayout
-                android:id="@+id/container_scroll_text_lin1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
-
-                <ImageButton
-
-                    android:id="@+id/imageButton8"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/container_scroll_text_lin1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@android:drawable/ic_menu_edit" />
+                    android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/imageButton9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:srcCompat="@android:drawable/ic_menu_send" />
+                    <ImageButton
+
+                        android:id="@+id/imageButton8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+                    <ImageButton
+                        android:id="@+id/imageButton9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_save_text" />
 
                     <ImageButton
                         android:id="@+id/invisible_text_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@android:drawable/ic_menu_camera" />
+                        app:srcCompat="@drawable/ic_save_inf_text" />
 
                     <ImageButton
                         android:id="@+id/detectWM"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@android:drawable/star_big_off" />
+                        app:srcCompat="@drawable/ic_magnify" />
 
                 </LinearLayout>
 
@@ -249,7 +329,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.1"
-                        app:srcCompat="@android:drawable/btn_dialog" />
+                        app:srcCompat="@drawable/ic_format_size" />
 
                     <Spinner
                         android:id="@+id/spinner"
@@ -262,14 +342,14 @@
                         android:layout_width="67dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.1"
-                        app:srcCompat="@android:drawable/ic_media_play" />
+                        app:srcCompat="@drawable/ic_format_bold" />
 
                     <ImageButton
                         android:id="@+id/front_I_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="67dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="0.1"
-                        app:srcCompat="@android:drawable/btn_dialog" />
+                        app:srcCompat="@drawable/ic_format_italic" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -283,7 +363,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        app:srcCompat="@android:drawable/ic_btn_speak_now" />
+                        app:srcCompat="@drawable/ic_content_save" />
 
                     <ImageButton
                         android:id="@+id/tile_mod"
@@ -305,6 +385,94 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/filters_menu"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/filter_1"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    app:srcCompat="@android:drawable/btn_star" />
+
+                <ImageView
+                    android:id="@+id/filter_2"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    app:srcCompat="@android:drawable/btn_star_big_off" />
+
+                <ImageView
+                    android:id="@+id/filter_3"
+                    android:layout_width="68dp"
+                    android:layout_height="68dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@android:drawable/btn_star_big_on" />
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/image_gallery"
+        android:layout_width="0dp"
+        android:layout_height="243dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_image" />
+
+        <ImageView
+
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_matrix_full" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_content_save" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="49dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_content_save" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_magnify" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

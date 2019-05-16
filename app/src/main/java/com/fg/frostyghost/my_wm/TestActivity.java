@@ -20,6 +20,7 @@ import com.watermark.androidwm.bean.WatermarkText;
 import com.watermark.androidwm.listener.BuildFinishListener;
 import com.watermark.androidwm.listener.DetectFinishListener;
 import com.watermark.androidwm.task.DetectionReturnValue;
+import com.watermark.androidwm.utils.BitmapUtils;
 
 import timber.log.Timber;
 
@@ -129,7 +130,7 @@ public class TestActivity extends AppCompatActivity {
                 WatermarkBuilder
                         .create(TestActivity.this, backgroundView)
                         .loadWatermarkImage(watermarkBitmap)
-                        .setInvisibleWMListener(true, new BuildFinishListener<Bitmap>() {
+                        .setInvisibleWMListener(false, new BuildFinishListener<Bitmap>() {
                             @Override
                             public void onSuccess(Bitmap object) {
                                 progressBar.setVisibility(View.GONE);
@@ -138,7 +139,7 @@ public class TestActivity extends AppCompatActivity {
                                 if (object != null) {
                                     backgroundView.setImageBitmap(object);
                                     // Save to local needs permission.
-//                                BitmapUtils.saveAsPNG(object, "sdcard/DCIM/", true);
+                              BitmapUtils.saveAsPNG(object, "sdcard/DCIM/", true);
                                 }
                             }
 
