@@ -68,13 +68,15 @@ public class MainActivity extends AppCompatActivity  {
     private int edT = 1;
     private ImageButton writeText, confirmET, addText, frontB, frontI, frontSize_btn, invisible_text_btn, detectWM_btn, save_text_btn,
                             setTileMod, setTilePos, textEditMenu, imageEditMenu, imageFilterEditMenu, backMenu;
+
     private EditText editText;
-    private LinearLayout containerScrollText, container_n0, container_text, container_filter_menu;
+    private LinearLayout containerScrollText, container_n0, container_text, container_filter_menu, container_image;
     private SeekBar setFrontSize;
   private FrameLayout mInsideBottomSheet;
 
     private ImageView mResultImg;
     private ImageView filter_1,filter_2,filter_3;
+    private ImageView addImage, posImage, fingImage_btn, addInvImage, takeImage,  saveImage_btn ;
 //    private BaseMedia mMedia;
 
     //крч при завантажені фотки, зберігаємо бітмат з імв
@@ -252,6 +254,14 @@ public class MainActivity extends AppCompatActivity  {
                         set.applyTo(constraintLayout);
                         break;
                     case R.id.image_edit_menu:
+                        ConstraintSet set2 = new ConstraintSet();
+                        set2.clone(constraintLayout);
+                        //set.clear(R.id.button7, ConstraintSet.LEFT);
+                        set2.clear(R.id.image_gallery, ConstraintSet.TOP);
+                        set2.connect(R.id.image_gallery, ConstraintSet.TOP, R.id.button7, ConstraintSet.BOTTOM);
+                        //set.connect(R.id.button7, ConstraintSet.LEFT, R.id.guideline, ConstraintSet.LEFT);
+                        TransitionManager.beginDelayedTransition(constraintLayout);
+                        set2.applyTo(constraintLayout);
                         break;
                     case R.id.image_filter_edit_menu:
 
@@ -270,6 +280,27 @@ public class MainActivity extends AppCompatActivity  {
         textEditMenu.setOnClickListener(setMenu);
         imageEditMenu.setOnClickListener(setMenu);
         imageFilterEditMenu.setOnClickListener(setMenu);
+
+        //Менюшка з обробкою фото
+        View.OnClickListener imageGalleryListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (v.getId()){
+                    case R.id.imageView2:
+                        break;
+                    case R.id.imageView6:
+                        break;
+                    case R.id.imageView5:
+                        break;
+                    case R.id.imageView7:
+                        break;
+                    case R.id.imageView4:
+                        break;
+
+                }
+            }
+        };
 
         //filters
         View.OnClickListener setFilrer = new View.OnClickListener() {
@@ -389,6 +420,8 @@ public class MainActivity extends AppCompatActivity  {
             permission_list[0] = permission;
             ActivityCompat.requestPermissions(this, permission_list, 1);
         }
+
+
     }
 
     @Override
@@ -406,7 +439,7 @@ public class MainActivity extends AppCompatActivity  {
 
                         //NTCN TESTTTTTTTTTt
 
-                        copyExifRotation(f, f);
+
                     }
                     // Set the image in ImageView
                     mResultImg.setImageURI(selectedImageUri);
@@ -559,6 +592,13 @@ public class MainActivity extends AppCompatActivity  {
         imageFilterEditMenu = findViewById(R.id.image_filter_edit_menu);
         backMenu = findViewById(R.id.backMenu);
 
+        //imgBTNd
+        addImage = findViewById(R.id.imageView4);
+        posImage = findViewById(R.id.imageView6);
+        takeImage = findViewById(R.id.imageView2);
+        fingImage_btn = findViewById(R.id.imageView5);
+        saveImage_btn = findViewById(R.id.imageView7);
+
         frontB = findViewById(R.id.front_B_btn);
         frontI = findViewById(R.id.front_I_btn);
         frontSize_btn = findViewById(R.id.front_Size_btn);
@@ -567,6 +607,7 @@ public class MainActivity extends AppCompatActivity  {
         containerScrollText= findViewById(R.id.container_scroll_text);
         container_text = findViewById(R.id.container_text);
         container_filter_menu = findViewById(R.id.filters_menu);
+        container_image = findViewById(R.id.image_gallery);
 
         container_filter_menu=findViewById(R.id.filter_menu);
 
@@ -596,6 +637,7 @@ public class MainActivity extends AppCompatActivity  {
         //set.clear(R.id.button7, ConstraintSet.LEFT);
         set.clear(R.id.gallery, ConstraintSet.TOP);
         set.clear(R.id.filters_menu, ConstraintSet.TOP);
+        set.clear(R.id.image_gallery, ConstraintSet.TOP);
         //set.connect(R.id.gallery, ConstraintSet.TOP, R.id.button7, ConstraintSet.BOTTOM);
         //set.connect(R.id.button7, ConstraintSet.LEFT, R.id.guideline, ConstraintSet.LEFT);
         TransitionManager.beginDelayedTransition(constraintLayout);
@@ -604,19 +646,7 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-    public static boolean copyExifRotation(File sourceFile, File destFile) {
-        if (sourceFile == null || destFile == null) return false;
-        try {
-            ExifInterface exifSource = new ExifInterface(sourceFile.getAbsolutePath());
-            ExifInterface exifDest = new ExifInterface(destFile.getAbsolutePath());
-            exifDest.setAttribute(ExifInterface.TAG_ORIENTATION, exifSource.getAttribute(ExifInterface.TAG_ORIENTATION));
-            exifDest.saveAttributes();
-            return true;
-        } catch (IOException e) {
 
-            return false;
-        }
-    }
 
 
 }

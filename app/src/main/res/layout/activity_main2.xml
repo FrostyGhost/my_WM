@@ -43,7 +43,7 @@
     <LinearLayout
         android:id="@+id/main_photo"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="315dp"
         android:background="#888181"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/button7"
@@ -65,13 +65,19 @@
             app:srcCompat="@drawable/test"
             tools:layout_editor_absoluteY="402dp" />
 
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/test2" />
+
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/tools"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="32dp"
         android:background="#3A3939"
         android:orientation="horizontal"
@@ -159,14 +165,14 @@
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Button" />
 
                 <Button
                     android:id="@+id/button4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Button" />
 
@@ -433,10 +439,11 @@
     <LinearLayout
         android:id="@+id/image_gallery"
         android:layout_width="0dp"
-        android:layout_height="243dp"
+        android:layout_height="74dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
@@ -455,6 +462,13 @@
             app:srcCompat="@drawable/ic_matrix_full" />
 
         <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_magnify" />
+
+        <ImageView
             android:id="@+id/imageView7"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
@@ -463,16 +477,10 @@
 
         <ImageView
             android:id="@+id/imageView4"
-            android:layout_width="49dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_content_save" />
-
-        <ImageView
-            android:id="@+id/imageView5"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
+            android:layout_height="57dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_magnify" />
+            app:srcCompat="@drawable/ic_check" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
